@@ -35,7 +35,7 @@ class ChessPGNProcessor
                 continue;
 
             string[] lines = File.ReadAllLines(file);
-            string ecoCode = null;
+            string ecoCode = "999"; // Default ECO code
             var gameMoves = new List<string>();
 
             // Extract ECO code and process moves
@@ -57,7 +57,7 @@ class ChessPGNProcessor
                 }
             }
 
-            if (ecoCode == null || gameMoves.Count == 0)
+            if (gameMoves.Count == 0)
                 continue;
 
             // Add cleaned moves to the appropriate ECO group
