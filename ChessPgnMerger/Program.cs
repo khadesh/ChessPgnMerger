@@ -26,6 +26,7 @@ class ChessPGNProcessor
         // Regex patterns for cleaning the PGN
         var evalDataRegex = new Regex(@"\{\%.*?\}"); // Matches {%*} data
         var moveNumbersRegex = new Regex(@"\d+\.\.\."); // Matches move numbers with ...
+        var periodSpaceRegex = new Regex(@"\.(?!\s)"); // Matches periods not followed by a space
 
         // Read all files in the directory
         foreach (var file in Directory.GetFiles(directoryPath))
@@ -50,6 +51,7 @@ class ChessPGNProcessor
                     // Clean the moves
                     string cleanedLine = evalDataRegex.Replace(line, ""); // Remove {%*} data
                     cleanedLine = moveNumbersRegex.Replace(cleanedLine, ""); // Remove move numbers with ...
+                    cleanedLine = periodSpaceRegex.Replace(cleanedLine, ". "); // Ensure periods are followed by a space
                     cleanedLine = Regex.Replace(cleanedLine, @"\s+", " ").Trim(); // Normalize spaces
                     gameMoves.Add(cleanedLine);
                 }
